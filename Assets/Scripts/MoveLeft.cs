@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MoveLeft : MonoBehaviour
 {
-    private float speed = 30f; // The speed at which the object moves left
+    private float speed = 20f; // The speed at which the object moves left
     void Start()
     {
         
