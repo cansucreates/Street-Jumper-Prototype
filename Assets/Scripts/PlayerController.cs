@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public bool isOnGround = true; // Check if the player is on the ground
     public bool gameOver; // Check if the game is over
     private Animator playerAnim; // Reference to the Animator component
+    public ParticleSystem explosionParticle; // Reference to the explosion particle system
+    public ParticleSystem dirtParticle; // Reference to the dirt particle system
 
     void Start()
     {
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isOnGround = false; // Set isOnGround to false when the player jumps
             playerAnim.SetTrigger("Jump_trig"); // Trigger the jump animation
+            dirtParticle.Stop(); // Stop the dirt particle effect when jumping
         }
     }
 
@@ -32,6 +35,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true; // Set isOnGround to true when the player collides with the ground
+            dirtParticle.Play(); // Play the dirt particle effect
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
@@ -39,6 +43,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Game Over!");
             playerAnim.SetBool("Death_b", true); // Trigger the death animation
             playerAnim.SetInteger("DeathType_int", 1); // Set the death type to 1
+            explosionParticle.Play(); // Play the explosion particle effect
+            dirtParticle.Stop(); // Stop the dirt particle effect
         }
     }
 }
